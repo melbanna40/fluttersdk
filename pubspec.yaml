@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  http: ^0.13.4
+  http: ^1.1.2
   webview_flutter: ^3.0.0
   fluttertoast: ^8.0.8
   flutter_bcrypt: ^1.0.7
