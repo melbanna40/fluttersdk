@@ -1,98 +1,189 @@
-library flutter_upayments; 
+library flutter_upayments;
 
 class paymentDetails {
-  String? merchantId;
-  String? username;
-  String? password;
+  List<Products>? products;
+  Order? order;
+  PaymentGateway? paymentGateway;
+  String? language;
+  Reference? reference;
+  Customer? customer;
+  String? returnUrl;
   String? apiKey;
-  String? orderId;
-  String? totalPrice;
-  String? currencyCode;
-  String? successUrl;
-  String? errorUrl;
-  String? testMode;
-  String? customerFName;
-  String? customerEmail;
-  String? customerMobile;
-  String? paymentGateway;
-  String? whitelabled;
-  String? productTitle;
-  String? productName;
-  String? productPrice;
-  String? productQty;
-  String? reference;
-  String? notifyURL;
+  String? cancelUrl;
+  String? notificationUrl;
+  String? customerExtraData;
 
   paymentDetails(
-      {this.merchantId,
-      this.username,
-      this.password,
-      this.apiKey,
-      this.orderId,
-      this.totalPrice,
-      this.currencyCode,
-      this.successUrl,
-      this.errorUrl,
-      this.testMode,
-      this.customerFName,
-      this.customerEmail,
-      this.customerMobile,
+      {this.products,
+      this.order,
       this.paymentGateway,
-      this.whitelabled,
-      this.productTitle,
-      this.productName,
-      this.productPrice,
-      this.productQty,
+      this.language,
       this.reference,
-      this.notifyURL});
+      this.customer,
+      this.returnUrl,
+      this.apiKey,
+      this.cancelUrl,
+      this.notificationUrl,
+      this.customerExtraData});
 
   paymentDetails.fromJson(Map<String, dynamic> json) {
-    merchantId = json['merchant_id'];
-    username = json['username'];
-    password = json['password'];
-    apiKey = json['api_key'];
-    orderId = json['order_id'];
-    totalPrice = json['total_price'];
-    currencyCode = json['CurrencyCode'];
-    successUrl = json['success_url'];
-    errorUrl = json['error_url'];
-    testMode = json['test_mode'];
-    customerFName = json['customerFName'];
-    customerEmail = json['customerEmail'];
-    customerMobile = json['customerMobile'];
-    paymentGateway = json['payment_gateway'];
-    whitelabled = json['whitelabled'];
-    productTitle = json['ProductTitle'];
-    productName = json['ProductName'];
-    productPrice = json['ProductPrice'];
-    productQty = json['ProductQty'];
-    reference = json['Reference'];
-    notifyURL = json['notifyURL'];
+    if (json['products'] != null) {
+      products = <Products>[];
+      json['products'].forEach((v) {
+        products!.add(Products.fromJson(v));
+      });
+    }
+    order = json['order'] != null ? Order.fromJson(json['order']) : null;
+    paymentGateway = json['paymentGateway'] != null
+        ? PaymentGateway.fromJson(json['paymentGateway'])
+        : null;
+    language = json['language'];
+    reference = json['reference'] != null
+        ? Reference.fromJson(json['reference'])
+        : null;
+    customer =
+        json['customer'] != null ? Customer.fromJson(json['customer']) : null;
+    returnUrl = json['returnUrl'];
+    apiKey = json['apiKey'];
+    cancelUrl = json['cancelUrl'];
+    notificationUrl = json['notificationUrl'];
+    customerExtraData = json['customerExtraData'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['merchant_id'] = this.merchantId;
-    data['username'] = this.username;
-    data['password'] = this.password;
-    data['api_key'] = this.apiKey;
-    data['order_id'] = this.orderId;
-    data['total_price'] = this.totalPrice;
-    data['CurrencyCode'] = this.currencyCode;
-    data['success_url'] = this.successUrl;
-    data['error_url'] = this.errorUrl;
-    data['test_mode'] = this.testMode;
-    data['customerFName'] = this.customerFName;
-    data['customerEmail'] = this.customerEmail;
-    data['customerMobile'] = this.customerMobile;
-    data['payment_gateway'] = this.paymentGateway;
-    data['whitelabled'] = this.whitelabled;
-    data['ProductTitle'] = this.productTitle;
-    data['ProductName'] = this.productName;
-    data['ProductPrice'] = this.productPrice;
-    data['ProductQty'] = this.productQty;
-    data['Reference'] = this.reference;
-    data['notifyURL'] = this.notifyURL;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (products != null) {
+      data['products'] = products!.map((v) => v.toJson()).toList();
+    }
+    if (order != null) {
+      data['order'] = order!.toJson();
+    }
+    if (paymentGateway != null) {
+      data['paymentGateway'] = paymentGateway!.toJson();
+    }
+    data['language'] = language;
+    if (reference != null) {
+      data['reference'] = reference!.toJson();
+    }
+    if (customer != null) {
+      data['customer'] = customer!.toJson();
+    }
+    data['returnUrl'] = returnUrl;
+    data['apiKey'] = apiKey;
+    data['cancelUrl'] = cancelUrl;
+    data['notificationUrl'] = notificationUrl;
+    data['customerExtraData'] = customerExtraData;
+    return data;
+  }
+}
+
+class Products {
+  String? name;
+  String? description;
+  int? price;
+  int? quantity;
+
+  Products({this.name, this.description, this.price, this.quantity});
+
+  Products.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    description = json['description'];
+    price = json['price'];
+    quantity = json['quantity'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['description'] = description;
+    data['price'] = price;
+    data['quantity'] = quantity;
+    return data;
+  }
+}
+
+class Order {
+  String? id;
+  String? reference;
+  String? description;
+  String? currency;
+  int? amount;
+
+  Order(
+      {this.id, this.reference, this.description, this.currency, this.amount});
+
+  Order.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    reference = json['reference'];
+    description = json['description'];
+    currency = json['currency'];
+    amount = json['amount'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['reference'] = reference;
+    data['description'] = description;
+    data['currency'] = currency;
+    data['amount'] = amount;
+    return data;
+  }
+}
+
+class PaymentGateway {
+  String? src;
+
+  PaymentGateway({this.src});
+
+  PaymentGateway.fromJson(Map<String, dynamic> json) {
+    src = json['src'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['src'] = src;
+    return data;
+  }
+}
+
+class Reference {
+  String? id;
+
+  Reference({this.id});
+
+  Reference.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    return data;
+  }
+}
+
+class Customer {
+  String? uniqueId;
+  String? name;
+  String? email;
+  String? mobile;
+
+  Customer({this.uniqueId, this.name, this.email, this.mobile});
+
+  Customer.fromJson(Map<String, dynamic> json) {
+    uniqueId = json['uniqueId'];
+    name = json['name'];
+    email = json['email'];
+    mobile = json['mobile'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['uniqueId'] = uniqueId;
+    data['name'] = name;
+    data['email'] = email;
+    data['mobile'] = mobile;
     return data;
   }
 }
