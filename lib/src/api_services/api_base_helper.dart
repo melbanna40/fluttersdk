@@ -6,15 +6,16 @@ import 'dart:convert';
 import 'dart:async';   
 
 class ApiBaseHelper {
-  Future<dynamic> post(String url, dynamic body,) async {
+  Future<dynamic> post(String url, Map<String,dynamic> body,) async {
     print('Api Post, url $url');
     var responseJson;
     try {
       final _authority = AppConst.baseUrl;
       final _path = url;
       Uri formattedUrl = Uri.parse(_authority + _path); 
-      Map<String, String> header = new Map();
+      Map<String, String> header = {};
       header["Content-Type"] = "application/json";
+      header["Authorization"] = "Bearer ${body['apiKey']}";
 
       final response =
           await http.post(formattedUrl, body: body, headers: header);

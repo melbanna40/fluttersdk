@@ -8,7 +8,7 @@ class paymentDetails {
   Reference? reference;
   Customer? customer;
   String? returnUrl;
-  String? apiKey;
+  String? apiToken;
   String? cancelUrl;
   String? notificationUrl;
   String? customerExtraData;
@@ -21,7 +21,7 @@ class paymentDetails {
       this.reference,
       this.customer,
       this.returnUrl,
-      this.apiKey,
+      this.apiToken,
       this.cancelUrl,
       this.notificationUrl,
       this.customerExtraData});
@@ -44,7 +44,7 @@ class paymentDetails {
     customer =
         json['customer'] != null ? Customer.fromJson(json['customer']) : null;
     returnUrl = json['returnUrl'];
-    apiKey = json['apiKey'];
+    apiToken = json['apiKey'];
     cancelUrl = json['cancelUrl'];
     notificationUrl = json['notificationUrl'];
     customerExtraData = json['customerExtraData'];
@@ -69,7 +69,7 @@ class paymentDetails {
       data['customer'] = customer!.toJson();
     }
     data['returnUrl'] = returnUrl;
-    data['apiKey'] = apiKey;
+    data['apiKey'] = apiToken;
     data['cancelUrl'] = cancelUrl;
     data['notificationUrl'] = notificationUrl;
     data['customerExtraData'] = customerExtraData;

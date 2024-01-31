@@ -43,7 +43,7 @@ Future<dynamic> RequestPayment(
   try {
     var salt10 = await FlutterBcrypt.saltWithRounds(rounds: 10);
     var encryptedSHA =
-        await FlutterBcrypt.hashPw(password: data.apiKey!, salt: salt10);
+        await FlutterBcrypt.hashPw(password: data.apiToken!, salt: salt10);
 
     var head = {"Content-Type": "application/json"};
     //encode Map to JSON
